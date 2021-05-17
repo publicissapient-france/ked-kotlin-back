@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class DemoResource(filmResourceService: FilmServiceApi) : DemoResourceApi {
     private val logger = LoggerFactory.getLogger(DemoResource::class.java)
+
     override fun getFilm(id: String): FilmResponseDto {
 
         return FilmResponseDto(id = "1", "test")
