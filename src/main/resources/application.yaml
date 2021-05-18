@@ -1,0 +1,7 @@
+tmdb:
+  baseUri: https://api.themoviedb.org/3/
+  apiKey: ec111e07c4ae78be4beb39617994c039
+
+logging:
+  level:
+    com.pse: TRACE

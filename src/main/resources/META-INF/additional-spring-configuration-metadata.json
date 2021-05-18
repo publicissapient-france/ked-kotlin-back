@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "tmdb.baseUri",
+      "type": "java.lang.String",
+      "description": "Description for tmdb.baseUri."
+    },
+    {
+      "name": "tmdb.apiKey",
+      "type": "java.lang.String",
+      "description": "Description for tmdb.apiKey."
+    }
+  ] }
