@@ -1,6 +1,7 @@
 package com.pse.kotlinked.infrastructure
 
 import com.pse.kotlinked.infrastructure.model.MovieResultsPage
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,6 +13,7 @@ import java.io.IOException
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles(value = ["test"])
 class SearchClientTest {
+
     private val logger = LoggerFactory.getLogger(SearchClientTest::class.java)
     @Autowired
     lateinit var searchClient: SearchClient
@@ -30,6 +32,6 @@ class SearchClientTest {
             null
         )
         val movieResults: MovieResultsPage? = call.execute().body()
-        logger.info(movieResults.toString())
+        assertThat(movieResults).isNotNull
     }
 }
