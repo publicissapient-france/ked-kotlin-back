@@ -22,7 +22,7 @@ class SearchClientTest {
     @Throws(IOException::class)
     fun test_movieSearch() {
         val call: Call<MovieResultsPage> = searchClient.movie(
-            api_key="ec111e07c4ae78be4beb39617994c039",
+            apiKey="ec111e07c4ae78be4beb39617994c039",
             query = "tenet",
             null,
             null,

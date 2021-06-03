@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 
 @RequestMapping("/demo/v1")
-interface DemoResourceApi {
-    @GetMapping("/{id}")
-    fun getFilm(@PathVariable("id") id: String): FilmResponseDto
+interface SearchResourceApi {
+    @GetMapping("/{name}")
+    fun movie(@PathVariable("name") name: String): List<FilmResponseDto>
 }
