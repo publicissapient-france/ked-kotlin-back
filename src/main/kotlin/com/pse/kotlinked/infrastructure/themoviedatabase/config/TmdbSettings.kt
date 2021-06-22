@@ -1,4 +1,4 @@
-package com.pse.kotlinked.infrastructure.config
+package com.pse.kotlinked.infrastructure.themoviedatabase.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
@@ -7,6 +7,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConfigurationProperties(prefix = "tmdb")
 data class TmdbSettings(
 
-    val api_key: String,
+    val apiKey: String,
     val baseUri: String
 )

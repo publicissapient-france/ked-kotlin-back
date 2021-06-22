@@ -2,6 +2,19 @@ tmdb:
   baseUri: https://api.themoviedb.org/3/
   apiKey: ec111e07c4ae78be4beb39617994c039
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
 logging:
   level:
-    com.pse: TRACE
+    com.pse: DEBUG
+    com.slack.socket_mode.SocketModeClient: INFO
+server:
+  port: 8888
