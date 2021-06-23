@@ -12,12 +12,12 @@ class MovieService(val criticsRepositorySpi: CriticsRepositorySpi) : MovieServic
     private val logger = LoggerFactory.getLogger(MovieService::class.java)
 
     override fun searchCriticsFor(movieName: String): List<MovieCritics> {
-        logger.info("Search Critics for [$name]")
-        val movies = criticsRepositorySpi.search(movieName = name)
+        logger.info("Search Critics for [$movieName]")
+        val movies = criticsRepositorySpi.search(movieName = movieName)
         logger.debug("Movies: $movies")
-        return runBlocking {
+        return runBlocking {                // This is the bridge between imperative code and coroutine. It will block the current thread until the coroutine is finished
             movies.map {
-                async {
+                async {                     // With this we will map all the collection asynchronously. Meaning we will call the critics in parallel
                     val critics = criticsRepositorySpi.searchCriticsAwait(movieId = it.id)
                     logger.info("Critic: $critics")
                     MovieCritics(
@@ -29,7 +29,7 @@ class MovieService(val criticsRepositorySpi: CriticsRepositorySpi) : MovieServic
                         imageURl = it.posterUrl
                     )
                 }
-            }.awaitAll()
+            }.awaitAll()            // work with the async {}  to wait that all asynchronous call during the mapping of the collection is done. Await is not blocking
         }
     }
 

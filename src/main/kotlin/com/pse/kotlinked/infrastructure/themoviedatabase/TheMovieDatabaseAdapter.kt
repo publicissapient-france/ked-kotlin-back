@@ -71,7 +71,8 @@ class TheMovieDatabaseAdapter(
     }
 
     /**
-     * This fonction can be called from coroutine or normal code without changing is signature !!!
+     * This fonction can be called from coroutine or normal code without changing is signature
+     * because it's a non blocking code !
      */
     private fun mapCriticsResult(result: Response<TmdbReviewsResult>): List<Critic> {
         if (result.isSuccessful) {

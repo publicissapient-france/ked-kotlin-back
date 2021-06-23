@@ -21,7 +21,7 @@ class SlackListener(val movieServiceApi: MovieServiceApi) {
     }
 
     init {
-        SocketModeApp("xapp-1-A022URLMLL8-2085697387297-f5730b3fab1164b9ba25c8f07e4877315304c879a83adba1a776f8fe359466e9", app).startAsync()
+        SocketModeApp("xapp-1-A022URLMLL8-2201149940755-cb000db7879e2dfe6aab785f138bd76c52e08e07119eff35d9a8edf51c4dfeb0", app).startAsync()
     }
 
 
