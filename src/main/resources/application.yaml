@@ -2,6 +2,9 @@ tmdb:
   baseUri: https://api.themoviedb.org/3/
   apiKey: ec111e07c4ae78be4beb39617994c039
 
+slack:
+  token: xapp-1-A022URLMLL8-2253232800689-dd3e35b9e69104008a94a0acf03380635f144ae0a595eb34f4689f72bbc0d9fb
+
 management:
   endpoints:
     web:
@@ -10,11 +13,10 @@ management:
   endpoint:
     health:
       show-details: always
-
+server:
+  port: 8888
 
 logging:
   level:
     com.pse: DEBUG
     com.slack.socket_mode.SocketModeClient: INFO
-server:
-  port: 8888

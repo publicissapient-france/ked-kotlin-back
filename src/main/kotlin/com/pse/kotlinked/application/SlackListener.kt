@@ -11,17 +11,21 @@ import com.slack.api.bolt.socket_mode.SocketModeApp
 import com.slack.api.model.block.LayoutBlock
 import com.slack.api.model.kotlin_extension.block.withBlocks
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class SlackListener(val movieServiceApi: MovieServiceApi) {
+class SlackListener(
+    val movieServiceApi: MovieServiceApi,
+    @Value("\${slack.token}") slackToken: String
+    ) {
 
     private val app = App().apply {
         command("/movie", MovieHandler(movieServiceApi))
     }
 
     init {
-        SocketModeApp("xapp-1-A022URLMLL8-2201149940755-cb000db7879e2dfe6aab785f138bd76c52e08e07119eff35d9a8edf51c4dfeb0", app).startAsync()
+        SocketModeApp(slackToken, app).startAsync()
     }
 
 
@@ -37,7 +41,7 @@ class SlackListener(val movieServiceApi: MovieServiceApi) {
         private fun createResponse(movieName: String, critics: List<MovieCritics>): List<LayoutBlock> {
             return withBlocks {
                 header {
-                    text(text = "Resultat de la recherche pour: $movieName")
+                    text(text = "Résultat de la recherche pour: $movieName")
                 }
                 critics.map {
                     divider()

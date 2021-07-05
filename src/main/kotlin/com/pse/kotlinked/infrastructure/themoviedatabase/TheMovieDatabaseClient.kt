@@ -41,7 +41,7 @@ interface TheMovieDatabaseClient {
         @Query("api_key") apiKey: String,
         @Query("language") language: String = LANGUAGE.FRENCH.value,
         @Query("page") page: Int = 1,
-    ) : Call<TmdbReviewsResult>
+    ) :  Call<TmdbReviewsResult>
 
 
     @Headers("Content-Type: application/json")

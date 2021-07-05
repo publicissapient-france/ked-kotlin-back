@@ -1,6 +1,8 @@
 package com.pse.kotlinked.infrastructure.themoviedatabase.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.slf4j.LoggerFactory
+import java.time.LocalDate
 
 data class TmdbSearchMoviesResult(
     var page: Int,
@@ -33,5 +35,17 @@ data class TmdbSearchMoviesResult(
         val voteAverage: Double?,
         @JsonProperty("vote_count")
         val voteCount: Int?
-    )
+    ) {
+        private val logger = LoggerFactory.getLogger(TmdbMovie::class.java)
+
+        val releaseDateAsLocalDate: LocalDate?
+            get() = releaseDate?.let { releaseDate ->
+                try {
+                    LocalDate.parse(releaseDate)
+                } catch (e: Exception) {
+                    logger.error("Error while reading releaseDate: {}", releaseDate)
+                    null
+                }
+            }
+    }
 }

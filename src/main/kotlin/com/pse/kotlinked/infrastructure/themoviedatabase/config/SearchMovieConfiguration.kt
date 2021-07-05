@@ -1,11 +1,10 @@
 package com.pse.kotlinked.infrastructure.themoviedatabase.config
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
+import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.pse.kotlinked.infrastructure.themoviedatabase.TheMovieDatabaseClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,7 +41,10 @@ class SearchMovieConfiguration {
     }
 
 
-    @Bean
+    /**
+     * Configuration using Retrofit java Builder
+     */
+    //@Bean
     fun searchClient(): TheMovieDatabaseClient {
         val okHttpClient: okhttp3.OkHttpClient = okhttp3.OkHttpClient.Builder()
             .addInterceptor(okHttpLoggingInterceptor())
@@ -58,6 +60,31 @@ class SearchMovieConfiguration {
             .create(TheMovieDatabaseClient::class.java)
     }
 
+    /**
+     * Configuration using custom Retrofit Dsl
+     */
+    @Bean
+    fun searchClientDsl(): TheMovieDatabaseClient {
+        return retrofit {
+            baseUrl(tmdbSettings.baseUri)
+            addConverterFactory(
+                JacksonConverterFactory.create(createJacksonKotlinMapper())
+            )
+            client(
+                okHttpClient {
+                    addInterceptor(okHttpLoggingInterceptor())
+                }
+            )
+        }
+    }
+
+    private fun createJacksonKotlinMapper(): ObjectMapper {
+        return jacksonObjectMapper().apply {
+            configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+            setSerializationInclusion(NON_NULL)
+            configure(INDENT_OUTPUT, true)
+        }
+    }
 
     @Bean
     fun okHttpLoggingInterceptor(): HttpLoggingInterceptor {
@@ -70,13 +97,4 @@ class SearchMovieConfiguration {
         }
     }
 
-
-    private fun createJacksonKotlinMapper(): ObjectMapper {
-        return jacksonObjectMapper().apply {
-            registerKotlinModule()
-            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            setSerializationInclusion(JsonInclude.Include.NON_NULL)
-            configure(SerializationFeature.INDENT_OUTPUT, true)
-        }
-    }
 }

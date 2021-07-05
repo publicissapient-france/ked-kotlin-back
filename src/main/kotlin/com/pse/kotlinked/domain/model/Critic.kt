@@ -4,7 +4,7 @@ data class Critic(
     val id: String,
     val author: String,
     val content: String,
-    val rating: Int?,
+    val rating: Int? = null,
 ) {
     val star: String
         get() {
