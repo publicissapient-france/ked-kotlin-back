@@ -41,9 +41,13 @@ data class TmdbSearchMoviesResult(
         val releaseDateAsLocalDate: LocalDate?
             get() = releaseDate?.let { releaseDate ->
                 try {
-                    LocalDate.parse(releaseDate)
+                    if (releaseDate.isNotEmpty()) {
+                        LocalDate.parse(releaseDate)
+                    } else {
+                        null
+                    }
                 } catch (e: Exception) {
-                    logger.error("Error while reading releaseDate: {}", releaseDate)
+                    logger.error("Error while reading releaseDate: {}", releaseDate, e)
                     null
                 }
             }

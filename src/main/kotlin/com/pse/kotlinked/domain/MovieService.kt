@@ -19,7 +19,6 @@ class MovieService(
         return movies.map { movie ->
             criticsRepositorySpi.searchCriticsAsync(movieId = movie.id)
                 .thenApply {
-                    logger.info("Critic: $it")
                     MovieCritics(
                         title = movie.title,
                         description = movie.description,
